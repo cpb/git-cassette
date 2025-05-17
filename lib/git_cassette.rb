@@ -9,4 +9,3 @@ module GitCassette
     yield(OpenStruct.new)
   end
 end
-
