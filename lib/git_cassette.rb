@@ -7,8 +7,8 @@ module GitCassette
     attr_accessor :cassette_dir, :repo_dir
 
     def initialize
-      @cassette_dir = 'cassettes'
-      @repo_dir = 'repos'
+      @cassette_dir = "cassettes"
+      @repo_dir = "repos"
     end
   end
 
