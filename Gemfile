@@ -11,4 +11,5 @@ end
 group :development, :test do
   gem 'cucumber', '~> 9.1'
   gem 'aruba', '~> 2.1'
+  gem 'rspec', '~> 3.12'
 end
