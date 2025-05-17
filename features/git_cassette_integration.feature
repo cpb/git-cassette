@@ -12,14 +12,13 @@ Feature: Record and replay git commands with git-cassette
       require 'git_cassette'
 
       RSpec.describe 'GitCassette' do
-        before(:all) do
-          GitCassette.configure do |config|
-            config.cassette_dir = File.join(Dir.pwd, 'cassettes')
-            config.repo_dir = File.join(Dir.pwd, 'repos')
-          end
-        end
-
         it 'records and replays a git repository state' do
+          cassette_dir = File.join(Dir.pwd, 'cassettes')
+          repo_dir = File.join(Dir.pwd, 'repos')
+          GitCassette.configure do |config|
+            config.cassette_dir = cassette_dir
+            config.repo_dir = repo_dir
+          end
           GitCassette.record('test-cassette') do
             File.write('test.txt', 'initial content')
             g = Git.init(Dir.pwd)
@@ -33,7 +32,7 @@ Feature: Record and replay git commands with git-cassette
           end
 
           # Verify git status output
-          g = Git.open(Dir.pwd)
+          g = Git.open(File.join(repo_dir, 'test-cassette'))
           status = g.status
           expect(status.changed.keys).to include('test.txt')
           expect(status.untracked.keys).to include('untracked.txt')
