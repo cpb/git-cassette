@@ -1,0 +1,59 @@
+---
+description: 
+globs: *_spec.rb
+alwaysApply: false
+---
+# TDD Workflow Rule
+
+## Core Priorities
+1. Always write a failing test before implementing behavior
+2. Automatically implement changes when test failures match expectations
+
+## Workflow Steps
+
+1. **Write Test**
+   - Write a minimal test to demonstrate missing behavior
+   - Include specific error message expectations
+   - Follow RSpec best practices
+
+2. **Verify Test Failure**
+   - Run the specific failing test
+   - If the failure matches expectations, proceed to implementation
+   - If the failure is unexpected, revise the test
+
+3. **Commit the Failing Test**
+   - Commit the failing test separately from the implementation
+   - Use conventional commits with gitmoji
+   - Format: `🧪 test(scope): description` for tests
+   - Include a `Co-authored-by:` trailer if AI contributed
+
+4. **Implement Behavior**
+   - Write minimal code to pass the test
+   - Follow Ruby best practices
+   - Maintain existing code style
+
+5. **Commit the Implementation**
+   - Commit the implementation separately from the test
+   - Use conventional commits with gitmoji
+   - Format: `✨ feat(scope): description` for implementation
+   - Include a `Co-authored-by:` trailer if AI contributed
+
+6. **Review Confidence**
+   - The goal is to build confidence in the process so that you can review the changes in a PR rather than accepting every change in the agent session
+   - If you get stuck, you are encouraged to ask for help, but strict adherence to the process is required
+
+## Gitmoji Reference
+- 🧪 for failing test commits
+- ✨ for feature implementations
+- ♻️ for refactoring
+- 🐛 for bug fixes
+- 🔧 for configuration changes
+- 🚚 for renaming or moving
+- 🏗️ for architectural changes
+
+## Notes
+- Keep tests focused and atomic
+- One behavior per test
+- Maintain test isolation
+- Follow red-green-refactor cycle strictly
+- Always attribute AI contributions in commit messages

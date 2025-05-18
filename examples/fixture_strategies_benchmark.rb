@@ -1,7 +1,7 @@
-require 'benchmark/ips'
-require 'fileutils'
-require 'git'
-require 'tempfile'
+require "benchmark/ips"
+require "fileutils"
+require "git"
+require "tempfile"
 
 class FixtureBenchmark
   TEST_DIR = File.join(Dir.tmpdir, "git_cassette_benchmark")
@@ -70,7 +70,7 @@ class FixtureBenchmark
       end
       untracked_commit_msg = [
         "git-cassette: untracked-files",
-        "files: #{untracked_files.join(',')}"
+        "files: #{untracked_files.join(",")}"
       ].join("\n")
       system("git commit -m \"#{untracked_commit_msg}\"")
     end
@@ -83,7 +83,7 @@ class FixtureBenchmark
       # Find the untracked files commit
       untracked_commit = `git log --grep='git-cassette: untracked-files' --format=%H -n 1`.strip
       untracked_msg = `git log -1 --format=%B #{untracked_commit}`
-      untracked_files = (untracked_msg[/files: (.+)/, 1] || '').split(',')
+      untracked_files = (untracked_msg[/files: (.+)/, 1] || "").split(",")
 
       # Find the working tree state commit
       tree_commit = `git log --grep='git-cassette: working-tree-state' --format=%H -n 1`.strip
@@ -92,10 +92,6 @@ class FixtureBenchmark
         # Clean repository - no need to restore working tree state
         system("git reset --hard HEAD")
       else
-        # Dirty repository - restore working tree state
-        tree_msg = `git log -1 --format=%B #{tree_commit}`
-        tree = tree_msg[/tree: (.+)/, 1]
-
         # First reset to the working tree state
         system("git reset --hard #{tree_commit}")
 
@@ -244,8 +240,8 @@ class FixtureBenchmark
         raise "untracked.txt not untracked" unless status.lines.any? { |l| l.strip == "?? untracked.txt" }
         content = File.read("untracked.txt").strip
         raise "untracked.txt content wrong" unless content == "This is untracked" || content == "untracked restored"
-      else
-        raise "untracked.txt should not exist" if File.exist?("untracked.txt")
+      elsif File.exist?("untracked.txt")
+        raise "untracked.txt should not exist"
       end
     end
   end
