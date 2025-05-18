@@ -14,7 +14,7 @@ module GitCassette
 
   class << self
     def configure
-      @config ||= Configuration.new
+      @config = Configuration.new
       yield(@config) if block_given?
       @config
     end
