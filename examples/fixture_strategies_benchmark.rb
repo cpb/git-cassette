@@ -92,10 +92,6 @@ class FixtureBenchmark
         # Clean repository - no need to restore working tree state
         system("git reset --hard HEAD")
       else
-        # Dirty repository - restore working tree state
-        tree_msg = `git log -1 --format=%B #{tree_commit}`
-        tree_msg[/tree: (.+)/, 1]
-
         # First reset to the working tree state
         system("git reset --hard #{tree_commit}")
 
