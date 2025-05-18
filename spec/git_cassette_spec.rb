@@ -35,7 +35,7 @@ RSpec.describe GitCassette do
     it "records initial repository state" do
       expect do
         GitCassette.record("test-cassette") do
-          File.write("test.txt", "initial content")
+          write_file("test.txt", "initial content")
           g = Git.init(Dir.pwd)
           g.add("test.txt")
           g.commit("Initial commit")
@@ -46,11 +46,11 @@ RSpec.describe GitCassette do
 
     it "records modified tracked files" do
       GitCassette.record("test-cassette") do
-        File.write("test.txt", "initial content")
+        write_file("test.txt", "initial content")
         g = Git.init(Dir.pwd)
         g.add("test.txt")
         g.commit("Initial commit")
-        File.write("test.txt", "modified content")
+        write_file("test.txt", "modified content")
       end
       g = Git.open(expand_path("repos/test-cassette"))
       expect(g.status.changed.keys).to include("test.txt")
@@ -58,11 +58,11 @@ RSpec.describe GitCassette do
 
     it "records untracked files" do
       GitCassette.record("test-cassette") do
-        File.write("test.txt", "initial content")
+        write_file("test.txt", "initial content")
         g = Git.init(Dir.pwd)
         g.add("test.txt")
         g.commit("Initial commit")
-        File.write("untracked.txt", "untracked content")
+        write_file("untracked.txt", "untracked content")
       end
       g = Git.open(expand_path("repos/test-cassette"))
       expect(g.status.untracked.keys).to include("untracked.txt")
@@ -70,11 +70,11 @@ RSpec.describe GitCassette do
 
     it "records git history" do
       GitCassette.record("test-cassette") do
-        File.write("test.txt", "initial content")
+        write_file("test.txt", "initial content")
         g = Git.init(Dir.pwd)
         g.add("test.txt")
         g.commit("Initial commit")
-        File.write("test.txt", "modified content")
+        write_file("test.txt", "modified content")
         g.add("test.txt")
         g.commit("Second commit")
       end

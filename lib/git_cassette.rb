@@ -25,10 +25,8 @@ module GitCassette
 
     def record(name, &block)
       setup_directories(name)
-      Dir.chdir(repo_path(name)) do
-        block.call
-        create_bundle(name)
-      end
+      yield
+      create_bundle(name)
     end
 
     private
