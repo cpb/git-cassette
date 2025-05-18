@@ -46,12 +46,8 @@ module GitCassette
     end
 
     def create_bundle(name)
-      unless system("git rev-parse --is-inside-work-tree > /dev/null 2>&1")
-        FileUtils.touch(bundle_path(name))
-        return
-      end
-      success = system("git bundle create #{bundle_path(name)} --all")
-      FileUtils.touch(bundle_path(name)) unless success && File.exist?(bundle_path(name))
+      return unless system("git rev-parse --is-inside-work-tree > /dev/null 2>&1")
+      system("git bundle create #{bundle_path(name)} --all")
     end
   end
 end
